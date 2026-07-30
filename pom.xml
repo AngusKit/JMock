@@ -39,14 +39,14 @@
 
   <distributionManagement>
     <repository>
-      <id>xcan-maven-release</id>
-      <name>XCan Release</name>
-      <url>https://nexus.xcan.cloud/repository/xcan-maven-release/</url>
+      <id>angus-maven-releases-public</id>
+      <name>XCan AngusRepo Releases</name>
+      <url>https://repo.anguskit.com/maven/maven-releases-public/</url>
     </repository>
     <snapshotRepository>
-      <id>xcan-maven-snapshot</id>
-      <name>XCan Snapshot</name>
-      <url>https://nexus.xcan.cloud/repository/xcan-maven-snapshot/</url>
+      <id>angus-maven-snapshots-public</id>
+      <name>XCan AngusRepo Snapshots</name>
+      <url>https://repo.anguskit.com/maven/maven-snapshots-public/</url>
       <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
