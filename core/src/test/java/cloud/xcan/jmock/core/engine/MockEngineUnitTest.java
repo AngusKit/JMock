@@ -27,7 +27,7 @@ class MockEngineUnitTest {
     assertEquals("hi", engine.render("@Echo(hi)"));
     assertEquals("hi", engine.evaluate("@Echo(hi)"));
 
-    assertNull(engine.render(null));
+    assertNull(engine.render((String) null));
     assertEquals("", engine.render(""));
     assertSame(reg, engine.getRegistry());
   }

@@ -58,6 +58,13 @@ class DefaultFunctionRegistryUnitTest {
   }
 
   @Test
+  void constructorDoesNotSetCallerLocale() {
+    ThreadLocaleHolder.removeLocale();
+    new DefaultFunctionRegistry(Locale.FRANCE);
+    assertNull(ThreadLocaleHolder.localeHolder.get());
+  }
+
+  @Test
   void reload_and_clear() {
     DefaultFunctionRegistry reg = new DefaultFunctionRegistry(Locale.ENGLISH);
     reg.clear();

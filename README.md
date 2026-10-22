@@ -78,20 +78,20 @@ Output is written to `website/out`. For GitHub Pages project sites, set `NEXT_PU
 
 ## Usage Example
 
-1. **Add Maven dependencies** (version `2.0.0` matches the parent POM)
+1. **Add Maven dependencies** (version `2.0.1` matches the parent POM)
 
 ```xml
 <dependency>
   <groupId>cloud.xcan.jmock</groupId>
   <artifactId>xcan-jmock.core</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 
 <!-- Optional: all built-in plugins -->
 <dependency>
   <groupId>cloud.xcan.jmock</groupId>
   <artifactId>xcan-jmock.all-plugin</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <scope>runtime</scope>
 </dependency>
 ```

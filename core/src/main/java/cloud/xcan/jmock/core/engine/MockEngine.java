@@ -59,7 +59,26 @@ public final class MockEngine {
     if (template == null || template.isEmpty()) {
       return template;
     }
-    List<MockExpr> ast = parser.parse(template);
+    return render(parse(template));
+  }
+
+  /**
+   * Parse once so callers can reuse the AST. Nodes are immutable records.
+   */
+  public List<MockExpr> parse(String template) {
+    if (template == null || template.isEmpty()) {
+      return List.of();
+    }
+    return parser.parse(template);
+  }
+
+  /**
+   * Render an already parsed template with this engine's registry.
+   */
+  public String render(List<MockExpr> ast) {
+    if (ast == null || ast.isEmpty()) {
+      return "";
+    }
     return renderer.render(ast, registry);
   }
 

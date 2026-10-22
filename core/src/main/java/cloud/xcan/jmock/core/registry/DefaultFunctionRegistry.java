@@ -35,9 +35,13 @@ public class DefaultFunctionRegistry implements FunctionRegistry {
   }
 
   public DefaultFunctionRegistry(Locale locale) {
+    if (locale == null) {
+      throw new IllegalArgumentException("locale");
+    }
     loadServiceMockRegister();
     loadServiceMessageRegister();
-    ThreadLocaleHolder.setLocale(locale);
+    // Locale stays on the caller around render. The constructor must not leave a
+    // thread-local that later work on the same pooled thread would inherit.
   }
 
   @Override

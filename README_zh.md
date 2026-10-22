@@ -69,20 +69,20 @@ cd website && npm ci && npm run build
 
 ## 使用示例
 
-1. **引入 Maven 依赖**（版本号 `2.0.0` 与父工程一致）
+1. **引入 Maven 依赖**（版本号 `2.0.1` 与父工程一致）
 
 ```xml
 <dependency>
   <groupId>cloud.xcan.jmock</groupId>
   <artifactId>xcan-jmock.core</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 
 <!-- 可选：聚合全部内置插件 -->
 <dependency>
   <groupId>cloud.xcan.jmock</groupId>
   <artifactId>xcan-jmock.all-plugin</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <scope>runtime</scope>
 </dependency>
 ```

@@ -25,7 +25,7 @@ public class MockEngineTest {
 
   @Test
   public void render_nullTemplate_returnsNull() {
-    Assertions.assertNull(engine.render(null));
+    Assertions.assertNull(engine.render((String) null));
   }
 
   @Test
