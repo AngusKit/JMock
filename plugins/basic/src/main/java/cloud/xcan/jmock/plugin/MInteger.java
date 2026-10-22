@@ -108,6 +108,8 @@ public class MInteger extends AbstractMockFunction {
     if (nullSampler != null && nullSampler.shouldBeNull()) {
       return null;
     }
-    return RandomUtils.nextInt(this.min, this.max);
+    // RandomUtils 的上界是开区间。函数参数 max 是可取到的最大值。
+    int upper = this.max == Integer.MAX_VALUE ? this.max : this.max + 1;
+    return RandomUtils.nextInt(this.min, upper);
   }
 }

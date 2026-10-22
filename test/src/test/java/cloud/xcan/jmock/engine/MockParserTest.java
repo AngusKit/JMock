@@ -94,8 +94,7 @@ public class MockParserTest {
     Assertions.assertEquals(1, result.size());
     Assertions.assertTrue(result.get(0) instanceof MockExpr.TextSegment);
     String text = ((MockExpr.TextSegment) result.get(0)).text();
-    Assertions.assertTrue(text.contains("@") || text.contains("Integer"),
-        "Escaped @ should be in text segment: " + text);
+    Assertions.assertEquals("@Integer()", text);
   }
 
   // ----- nested function call (expression argument) -----
@@ -154,7 +153,7 @@ public class MockParserTest {
     List<MockExpr> result = parser.parse("@integer()");
     // The @ is the function identifier but the name validation fails, so it falls back to text
     // At least one element should exist and it should be a TextSegment
-    Assertions.assertFalse(result.isEmpty());
-    Assertions.assertTrue(result.get(0) instanceof MockExpr.TextSegment);
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals("@integer()", ((MockExpr.TextSegment) result.get(0)).text());
   }
 }

@@ -38,9 +38,7 @@ class MockEngineUnitTest {
     reg.register(MEcho.class);
     MockEngine engine = new MockEngine(reg);
     Object out = engine.evaluate("pre@Echo(x)suf");
-    assertTrue(out instanceof String);
-    assertTrue(out.toString().contains("pre"));
-    assertTrue(out.toString().contains("suf"));
+    assertEquals("prexsuf", out);
   }
 
   @Test
@@ -99,8 +97,11 @@ class MockEngineUnitTest {
     MockRenderer r = new MockRenderer();
     MockEngine engine = new MockEngine(reg, p, r);
     reg.register(MFloat.class);
-    for (int i = 0; i < 10; i++) {
-      System.out.println(engine.render("@Float(5,15)"));
+    for (int i = 0; i < 20; i++) {
+      String rendered = engine.render("v=@Float(5,15)");
+      assertTrue(rendered.startsWith("v=") && !rendered.contains("@Float"), rendered);
+      float value = Float.parseFloat(rendered.substring(2));
+      assertTrue(value >= 5f && value <= 15f, rendered);
     }
   }
 }

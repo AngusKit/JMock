@@ -61,8 +61,9 @@ public class MockEngineTest {
     Assertions.assertTrue(result.startsWith("id="), "Should start with 'id=': " + result);
     Assertions.assertTrue(result.endsWith(",ok"), "Should end with ',ok': " + result);
     String middle = result.substring(3, result.length() - 3);
-    Assertions.assertDoesNotThrow(() -> Long.parseLong(middle),
-        "Middle should be numeric: " + middle);
+    long val = Long.parseLong(middle);
+    Assertions.assertTrue(val >= 1 && val <= 9999, result);
+    Assertions.assertFalse(result.contains("@Integer"), result);
   }
 
   @Test

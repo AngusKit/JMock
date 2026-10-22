@@ -36,18 +36,14 @@ public class ApiStyleMockResponseTest {
    * 一次 {@link MockEngine#render(String)} 拼出整段 JSON；{@code users} 为字符串数组。
    */
   @Test
-  void apiResponse_template_repeatLiteralUserInfo_printsToConsole() throws Exception {
+  void apiResponse_repeatLiteralUserInfo_keepsSurroundingJson() throws Exception {
     final int userRepeat = 5;
     String template = "{\"name\":\"xxx函数\",\"description\":\"xxx函数\",\"users\":@Repeat(用户信息,"
         + userRepeat + ")}";
 
     String raw = engine.render(template);
-    System.out.println("========== 模拟接口返回（模板 + @Repeat 用户信息 × " + userRepeat + "）==========");
-    System.out.println(raw);
 
     JsonNode tree = mapper.readTree(raw);
-    System.out.println("========== pretty ==========");
-    System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tree));
 
     Assertions.assertEquals("xxx函数", tree.get("name").asText());
     Assertions.assertEquals("xxx函数", tree.get("description").asText());
@@ -62,16 +58,22 @@ public class ApiStyleMockResponseTest {
    * 同一结构，{@code users} 每项为随机姓氏（仍是一条模板 render）。
    */
   @Test
-  void apiResponse_template_repeatLastname_printsToConsole() throws Exception {
+  void apiResponse_repeatLastname_keepsSurroundingJson() throws Exception {
     final int n = 4;
     String template =
         "{\"name\":\"xxx函数\",\"description\":\"xxx函数\",\"users\":@Repeat(@Lastname()," + n + ")}";
 
     String raw = engine.render(template);
-    System.out.println("========== users = @Repeat(@Lastname()," + n + ") ==========");
-    System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mapper.readTree(raw)));
 
     JsonNode tree = mapper.readTree(raw);
+    Assertions.assertEquals("xxx函数", tree.get("name").asText());
+    Assertions.assertEquals("xxx函数", tree.get("description").asText());
     Assertions.assertEquals(n, tree.get("users").size());
+    for (JsonNode user : tree.get("users")) {
+      Assertions.assertFalse(user.asText().isBlank());
+      Assertions.assertFalse(user.asText().contains("@"));
+    }
+    Assertions.assertFalse(raw.contains("@Lastname"));
+    Assertions.assertFalse(raw.contains("@Repeat"));
   }
 }

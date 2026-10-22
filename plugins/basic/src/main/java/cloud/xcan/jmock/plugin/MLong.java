@@ -112,7 +112,8 @@ public class MLong extends AbstractMockFunction {
     if (nullSampler != null && nullSampler.shouldBeNull()) {
       return null;
     }
-    return RandomUtils.nextLong(this.min, this.max);
+    long upper = this.max == Long.MAX_VALUE ? this.max : this.max + 1;
+    return RandomUtils.nextLong(this.min, upper);
   }
 
 }
