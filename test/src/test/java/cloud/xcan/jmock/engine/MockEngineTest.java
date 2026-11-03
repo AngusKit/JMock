@@ -3,6 +3,7 @@ package cloud.xcan.jmock.engine;
 import cloud.xcan.jmock.core.engine.MockEngine;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -165,5 +166,19 @@ public class MockEngineTest {
   @Test
   public void getRegistry_returnsNonNull() {
     Assertions.assertNotNull(engine.getRegistry());
+  }
+
+  @Test
+  public void monthLocaleArgumentSelectsTheDictionary() {
+    Locale previous = Locale.getDefault();
+    try {
+      Locale.setDefault(Locale.US);
+      String chinese = engine.render("@Month(zh_CN)");
+      String english = engine.render("@Month(en)");
+      Assertions.assertTrue(chinese.endsWith("月"), "zh_CN month: " + chinese);
+      Assertions.assertFalse(english.endsWith("月"), "en month: " + english);
+    } finally {
+      Locale.setDefault(previous);
+    }
   }
 }

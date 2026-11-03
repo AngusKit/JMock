@@ -59,11 +59,9 @@ public class MEducation extends AbstractMockFunction {
   }
 
   public MEducation(Locale locale, String dict) {
-    if (ObjectUtils.isEmpty(locale)) {
-      this.locale = DEFAULT_LOCALE_VALUE;
-    }
+    this.locale = ObjectUtils.isEmpty(locale) ? DEFAULT_LOCALE_VALUE : locale;
     if (ObjectUtils.isEmpty(dict)) {
-      String education = MessageResources.getString(UserDocMessage.DATA_EDUCATION, locale);
+      String education = MessageResources.getString(UserDocMessage.DATA_EDUCATION, this.locale);
       this.dict = education.split("\\|");
     } else {
       this.dict = dict.split("\\|");

@@ -44,11 +44,9 @@ public class MMonth extends AbstractMockFunction {
       example = "@Month()",
       exampleValues = {"January"})
   public MMonth(Locale locale) {
-    if (ObjectUtils.isEmpty(locale)) {
-      this.locale = DEFAULT_LOCALE_VALUE;
-    }
-    String week = MessageResources.getString(DateDocMessage.DATA_MONTH, locale);
-    this.dict = week.split("\\|");
+    this.locale = ObjectUtils.isEmpty(locale) ? DEFAULT_LOCALE_VALUE : locale;
+    String months = MessageResources.getString(DateDocMessage.DATA_MONTH, this.locale);
+    this.dict = months.split("\\|");
   }
 
   @Override

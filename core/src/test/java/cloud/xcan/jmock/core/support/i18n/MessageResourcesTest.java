@@ -38,6 +38,18 @@ public class MessageResourcesTest {
   }
 
   @Test
+  public void requestedLocaleDoesNotFallBackToJvmDefault() {
+    Locale previous = Locale.getDefault();
+    try {
+      Locale.setDefault(Locale.US);
+      String message = MessageResources.getString(messageKey, Locale.CHINA);
+      Assertions.assertEquals(chMessageTemplate, message);
+    } finally {
+      Locale.setDefault(previous);
+    }
+  }
+
+  @Test
   public void getStringWithParamTest() {
     String message = MessageResources.getString(messageKey, new Object[]{"length", 1, 10},
         Locale.US);

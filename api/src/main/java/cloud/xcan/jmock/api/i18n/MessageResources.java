@@ -15,6 +15,18 @@ public class MessageResources {
 
   public static final Set<String> RESOURCE_BUNDLE = new HashSet<>();
 
+  /**
+   * Plugin bundles keep Chinese in the root file and English in {@code *_en}.
+   * The default {@link ResourceBundle} search falls back to the JVM locale before
+   * the root, so an English JVM turns {@code zh_CN} into the English file.
+   */
+  private static final ResourceBundle.Control LOCALE_CONTROL = new ResourceBundle.Control() {
+    @Override
+    public Locale getFallbackLocale(String baseName, Locale locale) {
+      return null;
+    }
+  };
+
   static {
     RESOURCE_BUNDLE.add("i18n/jmock-messages");
   }
@@ -42,13 +54,32 @@ public class MessageResources {
    * Looks up a string resource identified by {@code key} in {@code resources}.
    */
   public static String getString(String key, Locale locale) {
+    if (locale == null) {
+      return getString(key);
+    }
+    // Chinese lives in the root bundle and English in *_en. Asking the JDK for
+    // zh_CN lets the default search pick the JVM locale before the root, so an
+    // English JVM turns @Month(zh_CN) into "July". Select the bundle directly.
+    Locale bundleLocale = bundleLocale(locale);
     for (String res : RESOURCE_BUNDLE) {
-      ResourceBundle bundle = ResourceBundle.getBundle(res, locale);
+      ResourceBundle bundle = ResourceBundle.getBundle(res, bundleLocale, LOCALE_CONTROL);
       if (bundle.containsKey(key)) {
         return bundle.getString(key);
       }
     }
     return "";
+  }
+
+  /**
+   * English locales read {@code *_en}. Every other locale, including {@code zh_CN},
+   * reads the root bundle.
+   */
+  static Locale bundleLocale(Locale locale) {
+    String language = locale.getLanguage();
+    if (language != null && language.toLowerCase(Locale.ROOT).startsWith("en")) {
+      return Locale.ENGLISH;
+    }
+    return Locale.ROOT;
   }
 
   /**

@@ -44,10 +44,8 @@ public class MWeek extends AbstractMockFunction {
       example = "@Week()",
       exampleValues = {"Tuesday"})
   public MWeek(Locale locale) {
-    if (ObjectUtils.isEmpty(locale)) {
-      this.locale = DEFAULT_LOCALE_VALUE;
-    }
-    String week = MessageResources.getString(DateDocMessage.DATA_WEEK, locale);
+    this.locale = ObjectUtils.isEmpty(locale) ? DEFAULT_LOCALE_VALUE : locale;
+    String week = MessageResources.getString(DateDocMessage.DATA_WEEK, this.locale);
     this.dict = week.split("\\|");
   }
 
